@@ -1,11 +1,11 @@
 
  userList = [];
  function saveUser(){
-     console.log("in the save function");
+     //console.log("in the save function");
      id = document.getElementById("id").value;
-     name = document.getElementById("name").value;
+     vname = document.getElementById("name").value;
      email = document.getElementById("email").value;
-     url= `name=${name}&email= ${email}`;
+     url= `name=${vname}&email= ${email}`;
 
      const xhttp = new XMLHttpRequest();
      if (id ==''){
@@ -38,16 +38,35 @@
      xhttp.send(); 
      xhttp.onload = function (){
          userList = JSON.parse (this.responseText);
-         text = "";
-         for(i in userList){
-             u = userList[i];
-             // console.log(u); 
-             text += `<tr onclick='activateUser(${i})'><td>${u.id}</td><td>${u.name}</td><td>${u.email}</td></tr>`;
-         } 
-        document.getElementById("tableBody").innerHTML = text;
+         updatePage();
+        
      }
     
  }  
+
+ function updatePage(){
+
+    pageQty =(userList.length) / 5;
+      if (pageQty >1){
+        txtpage = ` <li class = "page-item"><a class="page-link" href= "#">start</a>></li>`
+        for(i = 1; i <= pageQty; i++ ){
+            txtpage = ` <li class = "page-item" onclick='activateUser(${i - 1 })><a class="page-link" href= "#">${i}</a>></li>`
+        }
+        txtpage += `<li class += "page-item"><a class="page-link" href= "#">end</a>></li>`
+        document.getElementById("pageList").innerHTML =txtpage;
+      }
+
+
+    text = "";
+    pg = 5 * pg;
+    for(i = pg; i <= pg + 4; i++){
+        u = userList[i];
+        // console.log(u); 
+        text += `<tr onclick='activateUser(${i})'><td>${i}</td><td>${u.name}</td><td>${u.email}</td></tr>`;
+    } 
+   document.getElementById("tableBody").innerHTML = text;
+
+ }
 
  function activateUser(i){
      //console.log(userList[i]);
