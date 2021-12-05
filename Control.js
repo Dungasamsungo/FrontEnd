@@ -6,6 +6,16 @@ function saveUser() {
     email = document.getElementById("email").value;
     url = `name=${vname}&email= ${email}`;
 
+    if (vname.trim()== '') {
+        alert('Error in the typed name. ');
+        return
+    }
+
+    if (email.trim() == '') {
+        alert('Error in the typed name. ');
+        return;
+    }
+
     const xhttp = new XMLHttpRequest();
     if (id == '') {
         xhttp.open("POST", "https://class209.herokuapp.com/demo/add?" + url);
@@ -15,9 +25,13 @@ function saveUser() {
 
     xhttp.send();
     xhttp.onload = function () {
-        alert(this.responseText);
+        msg = this.responseText;
+        alert(msg);
         updateUser();
-        clearInput();
+        if (msg.substring(0,2) == 'ok'){
+            clearInput();
+        }
+    
 
     }
 
@@ -45,24 +59,27 @@ function updateUser() {
 
 function updatePage(pg) {
 
-    pageQty = (userList.length) / 5;
+    pageQty = userList.length / 5;
     if (pageQty % 5 > 0) {
         pageQty++;
     }
     pageQty = parseInt(pageQty);
     if (pageQty > 1) {
-        txtpage = `<li class="page-item" onclick='updatePage(0)' ><a class="page-link" href= "#">start</a></li>`
+        previous = (pg == 0) ? 0 : pg - 1;
+        Next = (pg == pageQty - 1) ? pageQty - 1 : pg + 1;
+        pageTxt = `<li class="page-item" onclick='updatePage(${previous})'><a class="page-link" href="#"><</a></li>`;
         for (i = 1; i <= pageQty; i++) {
-            active = ""
-            if(i-1 == pg){
-                active = "active"
+            pageTxt += `<li class="page-item`;
+                   if(i-1 == pg){
+                pageTxt += "active";
             }
-            txtpage += `<li class="page-item ${active}" onclick='updatePage(${i - 1})'><a class="page-link" href= "#">${i}</a></li>`
-            console.log(pageQty);
+            pageTxt += `<li onclick='updatepage(${i - 1})' ><a class ="page-link" href="#">${i}</a></li>`;
+            
+            
         }
-        txtpage += `<li class="page-item" onclick='updatePage(${pageQty - 1})'><a class="page-link" href= "#">end</a></li>`
+        pageTxt += `<li class="page-item" onclick='updatePage(${Next})'><a class="page-link" href= "#">></a></li>`;
         
-        document.getElementById("pageList").innerHTML = txtpage;
+        document.getElementById("pageList").innerHTML = pageTxt;
     }
 
 
@@ -70,7 +87,6 @@ function updatePage(pg) {
     pg = 5 * pg;
     for (i = pg; i <= pg + 4; i++) {
         u = userList[i];
-        // console.log(u); 
         if (u != undefined) {
             text += `<tr onclick='activateUser(${i})'><td>${u.id}</td><td>${u.name}</td><td>${u.email}</td></tr>`;
         }            
