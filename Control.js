@@ -31,20 +31,20 @@
      document.getElementById("email").value ="";
  }
 
-
+ //xhttp.open("GET", "https://class209.herokuapp.com/demo/all");
  function updateUser(){
      const xhttp = new XMLHttpRequest();
      xhttp.open("GET", "https://class209.herokuapp.com/demo/all");
      xhttp.send(); 
      xhttp.onload = function (){
          userList = JSON.parse (this.responseText);
-         updatePage();
+         updatePage(0);
         
      }
     
  }  
 
- function updatePage(){
+ function updatePage(pg){
 
     pageQty =(userList.length) / 5;
       if (pageQty >1){
