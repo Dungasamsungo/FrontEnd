@@ -12,38 +12,25 @@
 <body>
 
     <div class="container mt-3">
-        
-        <div class="row">
-            <div class="col-11">
-                <h2>Form usuário!<samp id="ver"></samp></h2>
+        <h2>USER FORM<samp id="view"></samp></h2>
+        <form action="">
+            <input type="hidden" id = "id" value="">
+            <div class="mt-3 mb-3">
+                <label for="name">Name: </label>
+                <input type="text" class="form-control" id="name">
             </div>
-            <div class="col-1 justify-content-end">
-                <form th:action="@{/logout}" method="post">
-                    <input type="submit" class="btn btn-danger" value="Sair" />
-                </form>
+            <div class="mt-3 mb-3">
+                <label for="email">E-mail: </label>
+                <input type="email" class="form-control" id="email">
             </div>
-        </div>
-
+            <div>
+                <button type="button" class="btn btn-primary" onclick="saveUser()">SAVE</button>
+                <button type="button" class="btn btn-secondary" onclick="clearInput()">NEW</button>
+                <button type="button" class="btn btn-danger" onclick="deleteUser()">DELETE</button>
+            </div>
             
-            <form action="">
-                <input type="hidden" id = "id" value="">
-                <div class="mt-3 mb-3">
-                    <label for="name">Name: </label>
-                    <input type="text" class="form-control" id="name">
-                </div>
-                <div class="mt-3 mb-3">
-                    <label for="email">E-mail: </label>
-                    <input type="email" class="form-control" id="email">
-                </div>
-                <div>
-                    <button type="button" class="btn btn-primary" onclick="saveUser()">SAVE</button>
-                    <button type="button" class="btn btn-secondary" onclick="clearInput()">NEW</button>
-                    <button type="button" class="btn btn-danger" onclick="deleteUser()">DELETE</button>
-                </div>
-            
-         </form>
-      </div>
-
+        </form>
+    </div>
     <div class="container mt-3">
         <ul class ="pagination justify-content-end" style="margin: 20px 0" id="pageList">
             <li class = "page-item"><a class="page-link" href= "#">PREVIOUS</a>></li>
@@ -51,7 +38,6 @@
             <li class = "page-item"><a class="page-link" href= "#">2</a>></li>
             <li class = "page-item"><a class="page-link" href= "#">3</a>></li>
             <li class = "page-item"><a class="page-link" href= "#">NEXT</a>></li>
-
         </ul>
         <!-- table row (defines rows in a table) = <tr> -->
         <!-- table dat a (defines the cells) = <td> -->
