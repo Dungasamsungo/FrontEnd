@@ -45,14 +45,17 @@ function updateUser() {
 
 function updatePage(pg) {
 
-    pageQty = (userList.length) / 5;
+    pageQty = userList.length / 5;
     if (pageQty % 5 > 0) {
         pageQty++;
     }
     pageQty = parseInt(pageQty);
     if (pageQty > 1) {
-        txtpage = `<li class="page-item" onclick='updatePage(0)' ><a class="page-link" href= "#">start</a></li>`
+      previous = (pg == 0) ? 0 : pg - 1;
+      next = (pg ==pageQty - 1) ? pageQty -1 : pg + 1;
+        txtpage = `<li class="page-item" onclick='updatePage(${previous})'><a class="page-link" href= "#"><</a></li>`;
         for (i = 1; i <= pageQty; i++) {
+            
             active = ""
             if(i-1 == pg){
                 active = "active"
@@ -60,11 +63,11 @@ function updatePage(pg) {
             txtpage += `<li class="page-item ${active}" onclick='updatePage(${i - 1})'><a class="page-link" href= "#">${i}</a></li>`
             console.log(pageQty);
         }
-        txtpage += `<li class="page-item" onclick='updatePage(${pageQty - 1})'><a class="page-link" href= "#">end</a></li>`
+        txtpage += `<li class="page-item" onclick='updatePage(${next})'><a class="page-link" href= "#">></a></li>`
         
         document.getElementById("pageList").innerHTML = txtpage;
+    
     }
-
 
     text = "";
     pg = 5 * pg;
